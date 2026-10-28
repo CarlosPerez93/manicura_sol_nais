@@ -26,3 +26,6 @@ dist-ssr
 .env.local
 .env.production
 .buyer-execution-hooks
+
+# Local Netlify folder
+.netlify
