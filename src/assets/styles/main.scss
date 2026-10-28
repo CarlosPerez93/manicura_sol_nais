@@ -121,3 +121,17 @@ button {
   white-space: nowrap;
   border-width: 0;
 }
+
+// ==========================================
+// Netlify HUD
+// El plan gratuito inyecta un iframe con el distintivo "Powered by Netlify"
+// en la esquina inferior derecha (script /.netlify/scripts/hud). No forma
+// parte del diseño: se oculta sin bloquear su carga.
+// ==========================================
+#nl-badge-frame,
+netlify-hud,
+iframe[src*='netlify'] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
