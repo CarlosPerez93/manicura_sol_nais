@@ -1,0 +1,78 @@
+// ==========================================
+// SOLES NAILS - SCSS DESIGN TOKENS & VARIABLES
+// ==========================================
+
+// Color Palette: Luxe Nude & Terracotta Rose
+$color-primary: #C27D6B;
+$color-primary-light: #E8B4A2;
+$color-primary-dark: #8E4839;
+$color-primary-rgb: 194, 125, 107;
+
+$color-accent-gold: #D4AF37;
+$color-accent-gold-light: #F3E5AB;
+$color-accent-gold-dark: #9A7B1C;
+$color-accent-rose: #E29578;
+
+// Neutral Backgrounds & Surfaces (Warm Porcelain Aesthetics)
+$color-bg-base: #FAF7F2;
+$color-bg-subtle: #F3ECE2;
+$color-bg-card: #FFFFFF;
+$color-bg-glass: rgba(255, 255, 255, 0.82);
+$color-bg-glass-dark: rgba(42, 30, 32, 0.88);
+
+// Dark & Contrast Shades (Burgundy Plum & Dark Espresso)
+$color-text-main: #2A1E20;
+$color-text-muted: #6B5558;
+$color-text-light: #967C80;
+$color-text-inverse: #FFFDFB;
+
+// Status & Functional Colors
+$color-success: #388E3C;
+$color-success-bg: #E8F5E9;
+$color-error: #D32F2F;
+$color-error-bg: #FFEBEE;
+$color-whatsapp: #25D366;
+$color-whatsapp-dark: #1EBE5D;
+$color-instagram: #E1306C;
+$color-instagram-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+
+// Borders & Dividers
+$border-color-subtle: rgba(194, 125, 107, 0.18);
+$border-color-glow: rgba(212, 175, 55, 0.35);
+
+// Typography Tokens
+$font-family-display: 'Italiana', 'Playfair Display', serif;
+$font-family-serif: 'Playfair Display', Georgia, serif;
+$font-family-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+// Shadows & Glows
+$shadow-xs: 0 1px 2px rgba(42, 30, 32, 0.04);
+$shadow-sm: 0 4px 12px rgba(42, 30, 32, 0.06);
+$shadow-md: 0 10px 30px rgba(42, 30, 32, 0.08);
+$shadow-lg: 0 20px 45px rgba(42, 30, 32, 0.12);
+$shadow-glow-gold: 0 0 25px rgba(212, 175, 55, 0.25);
+$shadow-glow-rose: 0 0 30px rgba(194, 125, 107, 0.28);
+
+// Border Radius
+$radius-xs: 6px;
+$radius-sm: 10px;
+$radius-md: 16px;
+$radius-lg: 24px;
+$radius-full: 9999px;
+
+// Spacings
+$spacing-unit: 8px;
+$container-max-width: 1240px;
+
+// Breakpoints
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-laptop: 1024px;
+$bp-desktop: 1280px;
+
+// Transitions & Easings
+$ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+$transition-fast: 0.2s $ease-smooth;
+$transition-normal: 0.35s $ease-smooth;
+$transition-slow: 0.6s $ease-smooth;

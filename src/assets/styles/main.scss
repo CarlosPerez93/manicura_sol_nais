@@ -1,0 +1,123 @@
+// ==========================================
+// SOLES NAILS - MAIN SCSS ENTRY
+// ==========================================
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'animations' as *;
+@use 'typography' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: $color-bg-base;
+  color: $color-text-main;
+  font-family: $font-family-sans;
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba($color-primary-light, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 90% 60%, rgba($color-accent-gold-light, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 50% 90%, rgba($color-primary-light, 0.12) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+// Accessible Focus Ring
+:focus-visible {
+  outline: 2px solid $color-primary;
+  outline-offset: 3px;
+  border-radius: $radius-xs;
+}
+
+// Selection Highlight
+::selection {
+  background-color: rgba($color-primary, 0.25);
+  color: $color-primary-dark;
+}
+
+// Layout Container
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 3vw, 2rem);
+  padding-right: clamp(1rem, 3vw, 2rem);
+}
+
+// Section Spacing & Layout
+.section {
+  padding-top: clamp(4rem, 8vw, 7.5rem);
+  padding-bottom: clamp(4rem, 8vw, 7.5rem);
+  position: relative;
+  overflow: hidden;
+
+  &--subtle {
+    background-color: rgba($color-bg-subtle, 0.55);
+    border-top: 1px solid rgba($color-primary, 0.08);
+    border-bottom: 1px solid rgba($color-primary, 0.08);
+  }
+}
+
+// Links
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color $transition-fast;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+// Custom Smooth Scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: $color-bg-base;
+}
+::-webkit-scrollbar-thumb {
+  background: $color-primary-light;
+  border-radius: $radius-full;
+  border: 2px solid $color-bg-base;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $color-primary;
+}
+
+// Utility: Screen reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

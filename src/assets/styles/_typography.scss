@@ -1,0 +1,70 @@
+// ==========================================
+// SOLES NAILS - SCSS TYPOGRAPHY RULES
+// ==========================================
+@use 'variables' as *;
+@use 'mixins' as *;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-serif;
+  color: $color-text-main;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.font-display {
+  font-family: $font-family-display;
+  letter-spacing: 0.04em;
+}
+
+.heading-xl {
+  font-size: clamp(2.5rem, 5vw + 1rem, 4.4rem);
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.heading-lg {
+  font-size: clamp(2rem, 3.5vw + 0.8rem, 3.2rem);
+  line-height: 1.18;
+}
+
+.heading-md {
+  font-size: clamp(1.5rem, 2vw + 0.6rem, 2.2rem);
+  line-height: 1.25;
+}
+
+.heading-sm {
+  font-size: clamp(1.2rem, 1.2vw + 0.4rem, 1.5rem);
+  line-height: 1.35;
+}
+
+p, li, span, input, textarea, button {
+  font-family: $font-family-sans;
+  color: $color-text-muted;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+.lead-text {
+  font-size: clamp(1.05rem, 1vw + 0.5rem, 1.25rem);
+  color: $color-text-muted;
+  line-height: 1.7;
+}
+
+.caption-text {
+  font-size: 0.875rem;
+  color: $color-text-light;
+}
+
+.text-gold {
+  color: $color-accent-gold-dark;
+}
+
+.text-terracotta {
+  color: $color-primary;
+}
+
+.text-italic {
+  font-style: italic;
+}

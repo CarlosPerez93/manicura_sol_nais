@@ -1,0 +1,119 @@
+// ==========================================
+// SOLES NAILS - SCSS MIXINS & UTILITIES
+// ==========================================
+@use 'variables' as *;
+
+// Media Queries
+@mixin mobile {
+  @media (max-width: #{$bp-tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$bp-tablet}) and (max-width: #{$bp-laptop - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: #{$bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin laptop-up {
+  @media (min-width: #{$bp-laptop}) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: #{$bp-desktop}) {
+    @content;
+  }
+}
+
+// Flexbox Helpers
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Glassmorphism effect
+@mixin glass-panel($bg: $color-bg-glass, $blur: 16px, $border: $border-color-subtle) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid $border;
+}
+
+// Manicure Gloss / Lacquer Sheen effect on hover
+@mixin lacquer-shine {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.45) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: left 0.75s ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    left: 170%;
+  }
+}
+
+// Subtle Gold Accent Line
+@mixin gold-accent-line {
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-accent-gold, transparent);
+    margin-top: 12px;
+    border-radius: $radius-full;
+  }
+}
+
+// Truncate Text
+@mixin text-truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
