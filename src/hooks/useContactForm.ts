@@ -1,109 +1,110 @@
-import { useState } from 'react';
+import { useCallback, useState, type ChangeEvent, type FormEvent } from 'react';
 import { isValidName, isValidPhone, isValidEmail } from '../utils/validators';
-import { contactService } from '../services/contactService';
-import { whatsappService } from '../services/whatsappService';
+import { contactService, type ContactRepository } from '../services/contactService';
+import { whatsappService, type MessagingService } from '../services/whatsappService';
+import type { ContactFormData, ContactFormErrors, ContactSubmitOutcome } from '../types/domain';
+import type { UseContactFormResult } from '../types/ui';
 
-export const useContactForm = (initialService = '') => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    service: initialService,
-    preferredDate: '',
-    message: ''
-  });
+const emptyForm = (service = ''): ContactFormData => ({
+  name: '',
+  phone: '',
+  email: '',
+  service,
+  preferredDate: '',
+  message: ''
+});
 
-  const [errors, setErrors] = useState({});
+interface ContactFormDependencies {
+  readonly repository?: ContactRepository;
+  readonly messaging?: MessagingService;
+}
+
+/**
+ * Estado y validación del formulario de contacto.
+ * Las dependencias se inyectan (DIP): el hook no instancia servicios concretos.
+ */
+export const useContactForm = (
+  initialService = '',
+  { repository = contactService, messaging = whatsappService }: ContactFormDependencies = {}
+): UseContactFormResult => {
+  const [formData, setFormData] = useState<ContactFormData>(() => emptyForm(initialService));
+  const [errors, setErrors] = useState<ContactFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const validate = () => {
-    const newErrors = {};
+  const validate = useCallback((): ContactFormErrors => {
+    const nextErrors: ContactFormErrors = {};
 
     if (!isValidName(formData.name)) {
-      newErrors.name = 'Por favor, introduce tu nombre (mínimo 2 letras).';
+      nextErrors.name = 'Por favor, introduce tu nombre (mínimo 2 letras).';
     }
-
     if (!isValidPhone(formData.phone)) {
-      newErrors.phone = 'Introduce un teléfono de contacto válido (ej: 690 123 456).';
+      nextErrors.phone = 'Introduce un teléfono de contacto válido (ej: 690 123 456).';
     }
-
     if (formData.email && !isValidEmail(formData.email)) {
-      newErrors.email = 'El formato del correo electrónico no es válido.';
+      nextErrors.email = 'El formato del correo electrónico no es válido.';
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    return nextErrors;
+  }, [formData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const { name, value } = event.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setErrors((prev) => (prev[name as keyof ContactFormData] ? { ...prev, [name]: undefined } : prev));
+    },
+    []
+  );
 
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: null
-      }));
-    }
-  };
+  const setService = useCallback((serviceTitle: string) => {
+    setFormData((prev) => ({ ...prev, service: serviceTitle }));
+  }, []);
 
-  const setService = (serviceTitle) => {
-    setFormData((prev) => ({
-      ...prev,
-      service: serviceTitle
-    }));
-  };
+  const handleSubmit = useCallback(
+    async (event?: FormEvent<HTMLFormElement>): Promise<ContactSubmitOutcome> => {
+      event?.preventDefault();
 
-  const handleSubmit = async (e) => {
-    if (e) e.preventDefault();
+      const validationErrors = validate();
+      setErrors(validationErrors);
+      if (Object.keys(validationErrors).length > 0) {
+        return { success: false, errors: validationErrors };
+      }
 
-    if (!validate()) {
-      return { success: false, errors };
-    }
+      setIsSubmitting(true);
+      try {
+        const response = await repository.submitContactForm(formData);
+        setIsSuccess(true);
+        return response;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Error al procesar la solicitud.';
+        setErrors((prev) => ({ ...prev, submit: message }));
+        return { success: false, error: message };
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [formData, repository, validate]
+  );
 
-    setIsSubmitting(true);
-    try {
-      const response = await contactService.submitContactForm(formData);
-      setIsSuccess(true);
-      return response;
-    } catch (error) {
-      setErrors((prev) => ({
-        ...prev,
-        submit: error.message || 'Error al procesar la solicitud.'
-      }));
-      return { success: false, error: error.message };
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const sendToWhatsApp = useCallback(() => {
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
 
-  const sendToWhatsApp = () => {
-    if (!validate()) return;
-
-    whatsappService.openDirectChat({
+    messaging.openDirectChat({
       name: formData.name,
       service: formData.service,
       preferredDate: formData.preferredDate,
       customMessage: formData.message
     });
-  };
+  }, [formData, messaging, validate]);
 
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      service: '',
-      preferredDate: '',
-      message: ''
-    });
+  const resetForm = useCallback(() => {
+    setFormData(emptyForm(initialService));
     setErrors({});
     setIsSuccess(false);
-  };
+  }, [initialService]);
 
   return {
     formData,

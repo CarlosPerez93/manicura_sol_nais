@@ -1,30 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
- * Hook para detectar la sección activa en el viewport
- * @param {string[]} sectionIds Lista de IDs de las secciones a monitorizar
- * @param {number} offset Desplazamiento en px para el trigger
- * @returns {string} ID de la sección actualmente activa
+ * Detecta la sección visible en el viewport.
+ * @param sectionIds IDs de las secciones a monitorizar.
+ * @param offset Desplazamiento en px del punto de activación.
  */
-export const useScrollSpy = (sectionIds = [], offset = 120) => {
-  const [activeSection, setActiveSection] = useState(sectionIds[0] || '');
+export const useScrollSpy = (sectionIds: readonly string[], offset = 120): string => {
+  const [activeSection, setActiveSection] = useState(sectionIds[0] ?? '');
 
   useEffect(() => {
     if (!sectionIds.length) return;
 
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const scrollPosition = window.scrollY + offset;
 
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
+      for (let i = sectionIds.length - 1; i >= 0; i -= 1) {
         const id = sectionIds[i];
+        if (!id) continue;
         const element = document.getElementById(id);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(id);
-            break;
-          }
+        if (!element) continue;
+
+        const { offsetTop, offsetHeight } = element;
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          setActiveSection(id);
+          break;
         }
       }
     };
@@ -32,9 +31,7 @@ export const useScrollSpy = (sectionIds = [], offset = 120) => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [sectionIds, offset]);
 
   return activeSection;

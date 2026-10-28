@@ -1,11 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import type { UseModalResult } from '../types/ui';
 
-export const useModal = (initialState = false) => {
+/**
+ * Estado de un modal con cierre por Escape y bloqueo de scroll.
+ * Genérico en `T`: cada modal decide qué datos transporta.
+ */
+export const useModal = <T,>(initialState = false): UseModalResult<T> => {
   const [isOpen, setIsOpen] = useState(initialState);
-  const [modalData, setModalData] = useState(null);
+  const [modalData, setModalData] = useState<T | null>(null);
 
-  const openModal = useCallback((data = null) => {
-    setModalData(data);
+  const openModal = useCallback((data?: T) => {
+    setModalData(data ?? null);
     setIsOpen(true);
   }, []);
 
@@ -15,8 +20,8 @@ export const useModal = (initialState = false) => {
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isOpen) {
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape' && isOpen) {
         closeModal();
       }
     };
@@ -34,10 +39,5 @@ export const useModal = (initialState = false) => {
     };
   }, [isOpen, closeModal]);
 
-  return {
-    isOpen,
-    modalData,
-    openModal,
-    closeModal
-  };
+  return { isOpen, modalData, openModal, closeModal };
 };

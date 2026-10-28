@@ -1,53 +1,41 @@
 // ==========================================
 // SOLES NAILS - WHATSAPP INTEGRATION SERVICE
-// Principio de Responsabilidad Única (SRP)
+// SRP: solo serializa mensajes de cita. DIP: los consumidores dependen de
+// la interfaz `MessagingService`, no de esta implementación concreta.
 // ==========================================
 import { SITE_INFO } from '../constants/siteInfo';
+import type { BookingParams } from '../types/domain';
 
-export const whatsappService = {
-  /**
-   * Genera el enlace directo a WhatsApp con mensaje pre-configurado
-   * @param {Object} params
-   * @param {string} [params.name]
-   * @param {string} [params.service]
-   * @param {string} [params.finish]
-   * @param {string} [params.customMessage]
-   * @param {string} [params.preferredDate]
-   * @returns {string} URL formateada para WhatsApp
-   */
-  createBookingUrl({ name, service, finish, customMessage, preferredDate } = {}) {
-    let text = `¡Hola Sol! ✨ Vengo desde tu página web de Soles Nails.`;
+export interface MessagingService {
+  createBookingUrl(params?: BookingParams): string;
+  openDirectChat(params?: BookingParams): void;
+}
 
-    if (name) {
-      text += `\n\n👤 *Mi nombre:* ${name.trim()}`;
-    }
+const buildMessage = ({ name, service, finish, customMessage, preferredDate }: BookingParams = {}): string => {
+  const lines: string[] = ['¡Hola Sol! ✨ Vengo desde tu página web de Soles Nails.'];
 
-    if (service) {
-      text += `\n💅 *Servicio de interés:* ${service}`;
-    }
+  if (name) lines.push(`👤 *Mi nombre:* ${name.trim()}`);
+  if (service) lines.push(`💅 *Servicio de interés:* ${service}`);
+  if (finish) lines.push(`✨ *Acabado deseado:* ${finish}`);
+  if (preferredDate) lines.push(`📅 *Preferencia de fecha/horario:* ${preferredDate}`);
+  if (customMessage) lines.push(`💬 *Mensaje:* ${customMessage.trim()}`);
 
-    if (finish) {
-      text += `\n✨ *Acabado deseado:* ${finish}`;
-    }
+  if (!customMessage) {
+    lines.push('', 'Me gustaría consultar disponibilidad para agendar una cita. ¡Muchas gracias!');
+  }
 
-    if (preferredDate) {
-      text += `\n📅 *Preferencia de fecha/horario:* ${preferredDate}`;
-    }
+  return lines.join('\n');
+};
 
-    if (customMessage) {
-      text += `\n💬 *Mensaje:* ${customMessage.trim()}`;
-    } else {
-      text += `\n\nMe gustaría consultar disponibilidad para agendar una cita. ¡Muchas gracias!`;
-    }
-
-    const encodedText = encodeURIComponent(text);
-    return `https://wa.me/${SITE_INFO.contact.phoneClean}?text=${encodedText}`;
+export const whatsappService: MessagingService = {
+  /** Genera el enlace directo a WhatsApp con el mensaje pre-configurado. */
+  createBookingUrl(params?: BookingParams): string {
+    const text = encodeURIComponent(buildMessage(params));
+    return `https://wa.me/${SITE_INFO.contact.phoneClean}?text=${text}`;
   },
 
-  /**
-   * Abre directamente WhatsApp en una nueva pestaña
-   */
-  openDirectChat(params = {}) {
+  /** Abre WhatsApp en una pestaña nueva. */
+  openDirectChat(params?: BookingParams): void {
     const url = this.createBookingUrl(params);
     window.open(url, '_blank', 'noopener,noreferrer');
   }

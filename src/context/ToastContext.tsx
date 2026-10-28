@@ -1,27 +1,50 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import type { Toast, ToastContextValue, ToastType } from '../types/ui';
 
-const ToastContext = createContext(null);
+const ToastContext = createContext<ToastContextValue | null>(null);
 
-export const ToastProvider = ({ children }) => {
-  const [toasts, setToasts] = useState([]);
+const createToastId = (): string =>
+  `${Date.now().toString()}-${Math.random().toString(36).slice(2, 5)}`;
 
-  const addToast = useCallback((message, type = 'info', duration = 4000) => {
-    const id = Date.now().toString() + Math.random().toString(36).substring(2, 5);
-    setToasts((prev) => [...prev, { id, message, type }]);
+interface ToastProviderProps {
+  readonly children: ReactNode;
+}
 
-    if (duration > 0) {
-      setTimeout(() => {
-        removeToast(id);
-      }, duration);
+export const ToastProvider = ({ children }: ToastProviderProps) => {
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const timers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  const removeToast = useCallback((id: string) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    const timer = timers.current.get(id);
+    if (timer) {
+      clearTimeout(timer);
+      timers.current.delete(id);
     }
   }, []);
 
-  const removeToast = useCallback((id) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  }, []);
+  const addToast = useCallback(
+    (message: string, type: ToastType = 'info', duration = 4000) => {
+      const id = createToastId();
+      setToasts((prev) => [...prev, { id, message, type }]);
+
+      if (duration > 0) {
+        timers.current.set(
+          id,
+          setTimeout(() => removeToast(id), duration)
+        );
+      }
+    },
+    [removeToast]
+  );
+
+  const value = useMemo<ToastContextValue>(
+    () => ({ addToast, removeToast }),
+    [addToast, removeToast]
+  );
 
   return (
-    <ToastContext.Provider value={{ addToast, removeToast }}>
+    <ToastContext.Provider value={value}>
       {children}
       <div className="toast-container" aria-live="polite" aria-atomic="true">
         {toasts.map((toast) => (
@@ -31,6 +54,7 @@ export const ToastProvider = ({ children }) => {
               onClick={() => removeToast(toast.id)}
               className="toast-close"
               aria-label="Cerrar notificación"
+              type="button"
             >
               &times;
             </button>
@@ -41,7 +65,7 @@ export const ToastProvider = ({ children }) => {
   );
 };
 
-export const useToast = () => {
+export const useToast = (): ToastContextValue => {
   const context = useContext(ToastContext);
   if (!context) {
     throw new Error('useToast debe ser utilizado dentro de un ToastProvider');

@@ -1,9 +1,11 @@
+import type { SiteInfo } from '../types/domain';
+
 // ==========================================
 // SOLES NAILS - SITE & BUSINESS DATA
 // Basado fielmente en el perfil oficial de Instagram
 // ==========================================
 
-export const SITE_INFO = {
+export const SITE_INFO: SiteInfo = {
   name: 'Soles Nails',
   handle: '@soles.nailshigueralareal',
   tagline: 'Uñas que hablan por ti ✨',

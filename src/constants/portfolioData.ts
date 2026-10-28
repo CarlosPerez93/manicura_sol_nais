@@ -1,9 +1,11 @@
+import type { PortfolioFilter, PortfolioWork } from '../types/domain';
+
 // ==========================================
 // SOLES NAILS - PORTFOLIO WORKS
 // Basado en los trabajos y destacados del Instagram oficial
 // ==========================================
 
-export const PORTFOLIO_ITEMS = [
+export const PORTFOLIO_ITEMS: readonly PortfolioWork[] = [
   {
     id: 'work-1',
     title: 'Esmaltado Nude Rosé & Trazos Orgánicos',
@@ -84,4 +86,11 @@ export const PORTFOLIO_ITEMS = [
   }
 ];
 
-export const PORTFOLIO_CATEGORIES = ['Todos', 'Nail Art', 'Semipermanente', 'Minimalista', 'Cuidado & Color', 'Especial Eventos'];
+export const PORTFOLIO_CATEGORIES: readonly PortfolioFilter[] = [
+  'Todos',
+  'Nail Art',
+  'Semipermanente',
+  'Minimalista',
+  'Cuidado & Color',
+  'Especial Eventos'
+];

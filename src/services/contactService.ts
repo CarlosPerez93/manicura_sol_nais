@@ -1,34 +1,41 @@
 // ==========================================
 // SOLES NAILS - CONTACT FORM SERVICE
-// Principio de Inversión de Dependencias y Responsabilidad Única
+// SRP: persiste solicitudes. DIP: la UI depende de `ContactRepository`.
 // ==========================================
+import type { ContactFormData, ContactSubmissionResult } from '../types/domain';
 
-export const contactService = {
-  /**
-   * Procesa el envío del formulario de contacto
-   * @param {Object} formData
-   * @returns {Promise<{success: boolean, message: string}>}
-   */
-  async submitContactForm(formData) {
-    // Simulamos latencia de red controlada para feedback visual accesible
-    await new Promise((resolve) => setTimeout(resolve, 800));
+export interface ContactRepository {
+  submitContactForm(formData: ContactFormData): Promise<ContactSubmissionResult>;
+}
 
-    // Validación básica de seguridad en capa de servicio
+const STORAGE_KEY = 'soles_nails_inquiries';
+const SIMULATED_LATENCY_MS = 800;
+
+interface StoredInquiry extends ContactFormData {
+  readonly timestamp: string;
+}
+
+const persistLocally = (formData: ContactFormData): void => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const history: StoredInquiry[] = raw ? (JSON.parse(raw) as StoredInquiry[]) : [];
+    history.push({ ...formData, timestamp: new Date().toISOString() });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+  } catch {
+    // Modo privado o almacenamiento bloqueado: la solicitud sigue siendo válida.
+  }
+};
+
+export const contactService: ContactRepository = {
+  async submitContactForm(formData: ContactFormData): Promise<ContactSubmissionResult> {
+    // Latencia simulada para ofrecer feedback accesible de envío.
+    await new Promise((resolve) => setTimeout(resolve, SIMULATED_LATENCY_MS));
+
     if (!formData.name || !formData.phone) {
       throw new Error('El nombre y el teléfono son campos obligatorios.');
     }
 
-    // Almacenamos temporalmente en localStorage para persistencia del usuario
-    try {
-      const existingHistory = JSON.parse(localStorage.getItem('soles_nails_inquiries') || '[]');
-      existingHistory.push({
-        ...formData,
-        timestamp: new Date().toISOString()
-      });
-      localStorage.setItem('soles_nails_inquiries', JSON.stringify(existingHistory));
-    } catch {
-      // Ignorar fallo de storage en modo privado
-    }
+    persistLocally(formData);
 
     return {
       success: true,

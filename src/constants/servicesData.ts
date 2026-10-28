@@ -1,8 +1,10 @@
+import type { Service, ServiceFilter } from '../types/domain';
+
 // ==========================================
 // SOLES NAILS - SERVICES DATA
 // ==========================================
 
-export const SERVICES = [
+export const SERVICES: readonly Service[] = [
   {
     id: 'esmaltado-semipermanente',
     title: 'Esmaltado Semipermanente',
@@ -85,4 +87,4 @@ export const SERVICES = [
   }
 ];
 
-export const SERVICE_CATEGORIES = ['Todos', 'Esmaltados', 'Diseño', 'Cuidado', 'Especial'];
+export const SERVICE_CATEGORIES: readonly ServiceFilter[] = ['Todos', 'Esmaltados', 'Diseño', 'Cuidado', 'Especial'];

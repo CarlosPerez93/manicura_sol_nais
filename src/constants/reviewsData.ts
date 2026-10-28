@@ -1,9 +1,11 @@
+import type { ClientReview } from '../types/domain';
+
 // ==========================================
 // SOLES NAILS - CLIENT STORIES & TESTIMONIALS
 // Inspirado en la sección de destacados "Clientas"
 // ==========================================
 
-export const CLIENT_REVIEWS = [
+export const CLIENT_REVIEWS: readonly ClientReview[] = [
   {
     id: 'rev-1',
     name: 'Elena M.',
