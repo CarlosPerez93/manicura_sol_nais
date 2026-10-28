@@ -115,7 +115,9 @@
 
 // Desktop Nav
 .desktop-nav {
-  @include mobile {
+  // La navegación horizontal necesita ~900px para convivir con el logo y los
+  // CTA; por debajo de portátil se usa el menú desplegable.
+  @include laptop-down {
     display: none;
   }
 
@@ -185,10 +187,22 @@
     border-radius: $radius-sm;
     background: transparent;
     color: $color-text-main;
+    flex-shrink: 0;
     @include flex-center;
 
-    @include mobile {
+    @include laptop-down {
       display: flex;
+    }
+  }
+
+  // En móviles compactos la cabecera solo conserva marca + menú: los CTA
+  // equivalentes siguen disponibles dentro del desplegable.
+  @include mobile-sm {
+    gap: 0.5rem;
+
+    .social-icon-btn,
+    > .custom-button {
+      display: none;
     }
   }
 }

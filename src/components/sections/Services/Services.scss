@@ -35,15 +35,16 @@
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 2rem;
 
     @include mobile {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
   .service-card {
+    min-width: 0;
     background: $color-bg-card;
     border-radius: $radius-lg;
     padding: 2rem;

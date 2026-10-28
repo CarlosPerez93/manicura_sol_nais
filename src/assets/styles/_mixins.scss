@@ -16,6 +16,20 @@
   }
 }
 
+// Pantallas por debajo del breakpoint de portátil (móvil + tablet)
+@mixin laptop-down {
+  @media (max-width: #{$bp-laptop - 1px}) {
+    @content;
+  }
+}
+
+// Móviles compactos: evita que los controles de cabecera desborden
+@mixin mobile-sm {
+  @media (max-width: #{$bp-mobile}) {
+    @content;
+  }
+}
+
 @mixin tablet-up {
   @media (min-width: #{$bp-tablet}) {
     @content;
