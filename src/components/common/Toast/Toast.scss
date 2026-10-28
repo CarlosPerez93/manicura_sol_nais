@@ -1,0 +1,62 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 380px;
+
+  @include mobile {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    max-width: none;
+  }
+}
+
+.toast-item {
+  background: $color-bg-card;
+  color: $color-text-main;
+  border-radius: $radius-md;
+  padding: 1rem 1.25rem;
+  box-shadow: $shadow-lg;
+  border-left: 4px solid $color-primary;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  @include flex-between;
+  gap: 1rem;
+
+  &--success {
+    border-left-color: $color-success;
+  }
+
+  &--error {
+    border-left-color: $color-error;
+  }
+
+  &--info {
+    border-left-color: $color-primary;
+  }
+
+  .toast-message {
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .toast-close {
+    color: $color-text-light;
+    font-size: 1.25rem;
+    line-height: 1;
+    padding: 0 0.25rem;
+
+    &:hover {
+      color: $color-text-main;
+    }
+  }
+}

@@ -1,0 +1,122 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.floating-actions {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.85rem;
+  pointer-events: none;
+
+  @include mobile {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+}
+
+.floating-tooltip {
+  pointer-events: auto;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: 0.85rem 1rem;
+  max-width: 270px;
+  box-shadow: $shadow-lg;
+  border: 1px solid rgba($color-primary, 0.25);
+  margin-bottom: 0.25rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 24px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid $color-bg-card;
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: 0.35rem;
+
+    .tooltip-title {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: $color-text-main;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .tooltip-close {
+      color: $color-text-light;
+      &:hover {
+        color: $color-text-main;
+      }
+    }
+  }
+
+  .tooltip-text {
+    font-size: 0.8rem;
+    color: $color-text-muted;
+    line-height: 1.4;
+  }
+}
+
+.floating-buttons-stack {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.floating-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: $radius-full;
+  @include flex-center;
+  color: #ffffff;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  transition: all $transition-normal;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1) translateY(-2px);
+  }
+
+  &--wa {
+    background: linear-gradient(135deg, $color-whatsapp 0%, $color-whatsapp-dark 100%);
+  }
+
+  &--ig {
+    width: 44px;
+    height: 44px;
+    background: $color-instagram-gradient;
+    opacity: 0.92;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: $radius-full;
+    background: $color-whatsapp;
+    opacity: 0.6;
+    animation: pulseGoldGlow 2.5s infinite;
+    z-index: -1;
+  }
+}

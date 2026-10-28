@@ -1,0 +1,132 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.custom-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: $font-family-sans;
+  font-weight: 600;
+  border-radius: $radius-full;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-normal;
+  white-space: nowrap;
+  user-select: none;
+  @include lacquer-shine;
+
+  // Sizes
+  &--sm {
+    padding: 0.45rem 1rem;
+    font-size: 0.825rem;
+    letter-spacing: 0.02em;
+  }
+
+  &--md {
+    padding: 0.75rem 1.6rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+  }
+
+  &--lg {
+    padding: 0.95rem 2.2rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  // Variants
+  &--primary {
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+    color: $color-text-inverse;
+    box-shadow: 0 4px 15px rgba($color-primary, 0.35);
+
+    &:hover:not(.custom-button--disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($color-primary, 0.45);
+      background: linear-gradient(135deg, $color-primary-light 0%, $color-primary-dark 100%);
+    }
+
+    &:active:not(.custom-button--disabled) {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background: $color-bg-card;
+    color: $color-text-main;
+    border-color: $border-color-subtle;
+    box-shadow: $shadow-sm;
+
+    &:hover:not(.custom-button--disabled) {
+      background: $color-bg-subtle;
+      border-color: $color-primary;
+      color: $color-primary-dark;
+      transform: translateY(-2px);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: $color-primary-dark;
+    border-color: $color-primary;
+
+    &:hover:not(.custom-button--disabled) {
+      background: rgba($color-primary, 0.08);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--whatsapp {
+    background: linear-gradient(135deg, $color-whatsapp 0%, $color-whatsapp-dark 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 18px rgba(37, 211, 102, 0.35);
+
+    &:hover:not(.custom-button--disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.48);
+    }
+  }
+
+  &--instagram {
+    background: $color-instagram-gradient;
+    color: #ffffff;
+    box-shadow: 0 4px 18px rgba(225, 48, 108, 0.35);
+
+    &:hover:not(.custom-button--disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(225, 48, 108, 0.48);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $color-text-muted;
+
+    &:hover:not(.custom-button--disabled) {
+      background: rgba($color-primary, 0.08);
+      color: $color-primary-dark;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  .button-icon {
+    flex-shrink: 0;
+    transition: transform $transition-fast;
+  }
+
+  &:hover .button-icon--right {
+    transform: translateX(3px);
+  }
+}

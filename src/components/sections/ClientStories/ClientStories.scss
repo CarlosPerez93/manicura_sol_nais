@@ -1,0 +1,162 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.client-stories-section {
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .review-card {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: 2rem;
+    box-shadow: $shadow-sm;
+    border: 1px solid rgba($color-primary, 0.15);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all $transition-normal;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-md;
+      border-color: rgba($color-primary, 0.35);
+    }
+
+    &__header {
+      @include flex-between;
+      margin-bottom: 1.25rem;
+
+      .rating-stars {
+        display: flex;
+        gap: 0.2rem;
+      }
+
+      .review-highlight-tag {
+        font-size: 0.725rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: $color-primary-dark;
+        background: rgba($color-primary, 0.1);
+        padding: 0.25rem 0.65rem;
+        border-radius: $radius-full;
+      }
+    }
+
+    .review-quote-body {
+      position: relative;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+
+      .quote-icon {
+        color: rgba($color-accent-gold, 0.35);
+        margin-bottom: 0.5rem;
+      }
+
+      .review-text {
+        font-size: 0.95rem;
+        color: $color-text-muted;
+        line-height: 1.6;
+        font-style: italic;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba($color-primary, 0.1);
+
+      .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-full;
+        background: linear-gradient(135deg, $color-primary-light, $color-primary-dark);
+        color: #ffffff;
+        font-weight: 700;
+        @include flex-center;
+      }
+
+      .author-info {
+        display: flex;
+        flex-direction: column;
+
+        .author-name {
+          font-size: 0.95rem;
+          color: $color-text-main;
+          font-weight: 700;
+        }
+
+        .author-service {
+          font-size: 0.775rem;
+          color: $color-text-light;
+        }
+      }
+    }
+  }
+
+  .experience-banner {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border: 1px solid rgba($color-primary, 0.25);
+    box-shadow: $shadow-sm;
+    @include flex-between;
+    gap: 1.5rem;
+
+    @include mobile {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+
+      @include mobile {
+        flex-direction: column;
+      }
+
+      .banner-title {
+        font-size: 1.15rem;
+        color: $color-text-main;
+        margin-bottom: 0.25rem;
+      }
+
+      .banner-desc {
+        font-size: 0.875rem;
+        color: $color-text-muted;
+      }
+    }
+
+    .banner-cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: $color-whatsapp-dark;
+      padding: 0.65rem 1.25rem;
+      border-radius: $radius-full;
+      background: rgba($color-whatsapp, 0.1);
+      border: 1px solid rgba($color-whatsapp, 0.3);
+      white-space: nowrap;
+      transition: all $transition-fast;
+
+      &:hover {
+        background: $color-whatsapp;
+        color: #ffffff;
+      }
+    }
+  }
+}

@@ -1,0 +1,352 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.contact-section {
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3.5rem;
+    align-items: start;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  // Left column cards
+  .contact-info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+
+    .wa-direct-card {
+      background: linear-gradient(145deg, #128C7E 0%, #075E54 100%);
+      color: #ffffff;
+      border-radius: $radius-lg;
+      padding: 2rem;
+      box-shadow: 0 8px 30px rgba(18, 140, 126, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+
+      &__header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        .wa-icon-box {
+          width: 52px;
+          height: 52px;
+          border-radius: $radius-full;
+          background: rgba(255, 255, 255, 0.2);
+          @include flex-center;
+        }
+
+        .wa-tag {
+          font-size: 0.725rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: $color-accent-gold-light;
+          display: block;
+        }
+
+        .wa-title {
+          font-size: 1.35rem;
+          color: #ffffff;
+        }
+      }
+
+      .wa-desc {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+      }
+
+      .wa-phone-number {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+      }
+    }
+
+    .quick-social-card {
+      background: $color-bg-card;
+      border-radius: $radius-lg;
+      padding: 1.5rem;
+      border: 1px solid rgba($color-primary, 0.18);
+      box-shadow: $shadow-xs;
+
+      .card-heading {
+        font-size: 0.95rem;
+        color: $color-text-main;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .social-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        .social-row {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 0.75rem 1rem;
+          border-radius: $radius-md;
+          background: $color-bg-subtle;
+          transition: all $transition-fast;
+
+          &:hover {
+            background: rgba($color-primary, 0.1);
+            transform: translateX(3px);
+          }
+
+          &__icon--ig {
+            width: 36px;
+            height: 36px;
+            border-radius: $radius-full;
+            background: $color-instagram-gradient;
+            color: #ffffff;
+            @include flex-center;
+          }
+
+          &__text {
+            display: flex;
+            flex-direction: column;
+
+            strong {
+              font-size: 0.9rem;
+              color: $color-text-main;
+            }
+
+            span {
+              font-size: 0.775rem;
+              color: $color-primary-dark;
+            }
+          }
+        }
+      }
+    }
+
+    .faq-widget {
+      background: $color-bg-card;
+      border-radius: $radius-lg;
+      padding: 1.5rem;
+      border: 1px solid rgba($color-primary, 0.18);
+      box-shadow: $shadow-xs;
+
+      &__header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+
+        .faq-title {
+          font-size: 1.05rem;
+          color: $color-text-main;
+        }
+      }
+
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+
+        .faq-item {
+          border: 1px solid rgba($color-primary, 0.12);
+          border-radius: $radius-md;
+          overflow: hidden;
+          transition: border-color $transition-fast;
+
+          &--open {
+            border-color: $color-primary;
+
+            .faq-question .faq-arrow {
+              transform: rotate(180deg);
+            }
+          }
+
+          .faq-question {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: $color-bg-card;
+            text-align: left;
+            @include flex-between;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: $color-text-main;
+
+            &:hover {
+              color: $color-primary-dark;
+            }
+
+            .faq-arrow {
+              color: $color-primary;
+              flex-shrink: 0;
+              transition: transform $transition-fast;
+            }
+          }
+
+          .faq-answer {
+            padding: 0 1rem 0.85rem;
+            font-size: 0.825rem;
+            color: $color-text-muted;
+            line-height: 1.55;
+            background: $color-bg-subtle;
+          }
+        }
+      }
+    }
+  }
+
+  // Right column Form
+  .contact-form-panel {
+    .form-card {
+      background: $color-bg-card;
+      border-radius: $radius-lg;
+      padding: clamp(2rem, 3.5vw, 2.75rem);
+      border: 1px solid rgba($color-primary, 0.22);
+      box-shadow: $shadow-md;
+
+      &__header {
+        margin-bottom: 2rem;
+
+        .form-title {
+          font-size: 1.65rem;
+          color: $color-text-main;
+          margin-bottom: 0.5rem;
+        }
+
+        .form-subtitle {
+          font-size: 0.9rem;
+          color: $color-text-muted;
+        }
+      }
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+
+        .form-label {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: $color-text-main;
+
+          .req {
+            color: $color-error;
+          }
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border-radius: $radius-sm;
+          border: 1px solid rgba($color-primary, 0.25);
+          background: #ffffff;
+          font-family: inherit;
+          font-size: 0.95rem;
+          color: $color-text-main;
+          transition: all $transition-fast;
+
+          &:focus {
+            border-color: $color-primary;
+            box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+            outline: none;
+          }
+
+          &--error {
+            border-color: $color-error;
+            background: $color-error-bg;
+          }
+        }
+
+        .form-textarea {
+          resize: vertical;
+          min-height: 100px;
+        }
+
+        .form-error {
+          font-size: 0.775rem;
+          color: $color-error;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          margin-top: 0.25rem;
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-top: 0.85rem;
+      }
+
+      .privacy-note {
+        font-size: 0.775rem;
+        color: $color-text-light;
+        text-align: center;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .form-success-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+
+      .success-icon-wrap {
+        width: 72px;
+        height: 72px;
+        border-radius: $radius-full;
+        background: $color-success-bg;
+        @include flex-center;
+        margin: 0 auto 1.5rem;
+      }
+
+      .success-title {
+        font-size: 1.45rem;
+        color: $color-text-main;
+        margin-bottom: 0.75rem;
+      }
+
+      .success-desc {
+        font-size: 0.95rem;
+        color: $color-text-muted;
+        max-width: 420px;
+        margin: 0 auto 2rem;
+        line-height: 1.6;
+      }
+
+      .success-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(42, 30, 32, 0.68);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999;
+  @include flex-center;
+  padding: 1rem;
+}
+
+.modal-container {
+  width: 100%;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  border: 1px solid rgba($color-primary, 0.2);
+  position: relative;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  background: $color-bg-subtle;
+  color: $color-text-main;
+  @include flex-center;
+  transition: all $transition-fast;
+  z-index: 10;
+
+  &:hover {
+    background: rgba($color-primary, 0.15);
+    color: $color-primary-dark;
+    transform: rotate(90deg);
+  }
+}
+
+.modal-header {
+  padding: 1.8rem 1.8rem 1rem;
+  border-bottom: 1px solid rgba($color-primary, 0.08);
+
+  .modal-title {
+    font-size: 1.45rem;
+    color: $color-text-main;
+    font-family: $font-family-serif;
+  }
+
+  .modal-subtitle {
+    font-size: 0.9rem;
+    color: $color-text-muted;
+    margin-top: 0.25rem;
+  }
+}
+
+.modal-body {
+  padding: 1.5rem 1.8rem 1.8rem;
+  overflow-y: auto;
+}

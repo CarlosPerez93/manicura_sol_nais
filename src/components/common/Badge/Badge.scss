@@ -1,0 +1,43 @@
+@use '../../../assets/styles/variables' as *;
+
+.custom-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: $radius-full;
+  font-family: $font-family-sans;
+  font-size: 0.775rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  width: fit-content;
+
+  &--gold {
+    background: rgba($color-accent-gold, 0.12);
+    color: $color-accent-gold-dark;
+    border: 1px solid rgba($color-accent-gold, 0.3);
+  }
+
+  &--rose {
+    background: rgba($color-primary, 0.12);
+    color: $color-primary-dark;
+    border: 1px solid rgba($color-primary, 0.25);
+  }
+
+  &--neutral {
+    background: rgba($color-text-main, 0.06);
+    color: $color-text-main;
+    border: 1px solid rgba($color-text-main, 0.12);
+  }
+
+  &--whatsapp {
+    background: rgba($color-whatsapp, 0.12);
+    color: $color-whatsapp-dark;
+    border: 1px solid rgba($color-whatsapp, 0.3);
+  }
+
+  .badge-icon {
+    flex-shrink: 0;
+  }
+}

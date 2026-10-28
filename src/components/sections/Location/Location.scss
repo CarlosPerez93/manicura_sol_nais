@@ -1,0 +1,185 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+.location-section {
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .location-info-card {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: clamp(2rem, 3.5vw, 2.5rem);
+    border: 1px solid rgba($color-primary, 0.2);
+    box-shadow: $shadow-sm;
+
+    .location-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+
+      .location-city-flag {
+        font-size: 2.2rem;
+      }
+
+      .location-city-name {
+        font-size: 1.75rem;
+        color: $color-text-main;
+        line-height: 1.1;
+      }
+
+      .location-province {
+        font-size: 0.85rem;
+        color: $color-primary-dark;
+        font-weight: 600;
+      }
+    }
+
+    .location-text {
+      font-size: 0.95rem;
+      color: $color-text-muted;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .location-details-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+
+      .detail-item {
+        display: flex;
+        gap: 1rem;
+
+        .detail-icon {
+          flex-shrink: 0;
+          margin-top: 3px;
+        }
+
+        .detail-title {
+          font-size: 0.95rem;
+          color: $color-text-main;
+          display: block;
+          margin-bottom: 0.35rem;
+        }
+
+        .detail-desc {
+          font-size: 0.85rem;
+          color: $color-text-muted;
+          line-height: 1.45;
+        }
+
+        .hours-sublist {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          margin-top: 0.25rem;
+
+          li {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.825rem;
+            color: $color-text-muted;
+
+            .days-col {
+              font-weight: 500;
+            }
+
+            .time-col {
+              color: $color-text-main;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+
+    .location-card-footer {
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba($color-primary, 0.1);
+    }
+  }
+
+  .location-map-visual {
+    .map-artistic-frame {
+      background: $color-bg-card;
+      border-radius: $radius-lg;
+      padding: 1.5rem;
+      border: 1px solid rgba($color-primary, 0.25);
+      box-shadow: $shadow-md;
+      position: relative;
+      overflow: hidden;
+
+      .map-pin-badge {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        z-index: 5;
+        background: rgba(42, 30, 32, 0.9);
+        backdrop-filter: blur(8px);
+        color: #ffffff;
+        padding: 0.5rem 1rem;
+        border-radius: $radius-md;
+        border: 1px solid rgba($color-accent-gold, 0.35);
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+
+        .pin-symbol {
+          color: $color-accent-gold-light;
+        }
+
+        .pin-text {
+          display: flex;
+          flex-direction: column;
+
+          strong {
+            font-size: 0.85rem;
+          }
+          span {
+            font-size: 0.725rem;
+            color: rgba(255, 255, 255, 0.7);
+          }
+        }
+      }
+
+      .map-vector-overlay {
+        border-radius: $radius-md;
+        overflow: hidden;
+        position: relative;
+
+        .map-svg-art {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+
+      .map-bottom-note {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        background: $color-bg-subtle;
+        border-radius: $radius-sm;
+        font-size: 0.8rem;
+        color: $color-text-muted;
+        line-height: 1.4;
+      }
+    }
+  }
+}
