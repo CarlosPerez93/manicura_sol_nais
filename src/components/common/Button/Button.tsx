@@ -1,10 +1,18 @@
-import React from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
+import type { ButtonProps } from '../../../types/ui';
 import './Button.scss';
 
+const ICON_SIZES = { sm: 14, md: 16, lg: 20 } as const;
+
+/**
+ * Botón o enlace con la misma apariencia.
+ * OCP: las variantes se resuelven por clase, sin tocar la implementación.
+ * LSP: el enlace cumple el mismo contrato de interacción que el botón.
+ */
 export const Button = ({
   children,
-  variant = 'primary', // 'primary' | 'secondary' | 'outline' | 'whatsapp' | 'instagram' | 'ghost'
-  size = 'md', // 'sm' | 'md' | 'lg'
+  variant = 'primary',
+  size = 'md',
   icon: Icon,
   iconPosition = 'left',
   fullWidth = false,
@@ -16,8 +24,8 @@ export const Button = ({
   onClick,
   disabled = false,
   ariaLabel,
-  ...props
-}) => {
+  ...rest
+}: ButtonProps) => {
   const classNames = [
     'custom-button',
     `custom-button--${variant}`,
@@ -29,24 +37,31 @@ export const Button = ({
     .filter(Boolean)
     .join(' ');
 
+  const iconSize = ICON_SIZES[size];
+
   const content = (
     <>
-      {Icon && iconPosition === 'left' && <Icon className="button-icon button-icon--left" aria-hidden="true" size={size === 'lg' ? 20 : size === 'sm' ? 14 : 16} />}
+      {Icon && iconPosition === 'left' && (
+        <Icon className="button-icon button-icon--left" aria-hidden="true" size={iconSize} />
+      )}
       <span className="button-text">{children}</span>
-      {Icon && iconPosition === 'right' && <Icon className="button-icon button-icon--right" aria-hidden="true" size={size === 'lg' ? 20 : size === 'sm' ? 14 : 16} />}
+      {Icon && iconPosition === 'right' && (
+        <Icon className="button-icon button-icon--right" aria-hidden="true" size={iconSize} />
+      )}
     </>
   );
 
   if (href && !disabled) {
+    const anchorProps = rest as ComponentPropsWithoutRef<'a'>;
     return (
       <a
         href={href}
         className={classNames}
         target={target}
-        rel={target === '_blank' ? (rel || 'noopener noreferrer') : rel}
+        rel={target === '_blank' ? rel ?? 'noopener noreferrer' : rel}
         aria-label={ariaLabel}
         onClick={onClick}
-        {...props}
+        {...anchorProps}
       >
         {content}
       </a>
@@ -60,7 +75,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel}
-      {...props}
+      {...rest}
     >
       {content}
     </button>

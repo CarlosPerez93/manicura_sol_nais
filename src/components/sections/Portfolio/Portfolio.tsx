@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Sparkles, Eye, MessageCircle, Heart, ArrowUpRight } from 'lucide-react';
+import { useState } from 'react';
+import { Sparkles, Eye, MessageCircle, ArrowUpRight } from 'lucide-react';
 import { InstagramIcon as Instagram } from '../../common/Icons/Icons';
 import { SectionHeading } from '../../common/SectionHeading/SectionHeading';
 import { Badge } from '../../common/Badge/Badge';
@@ -9,17 +9,18 @@ import { PORTFOLIO_ITEMS, PORTFOLIO_CATEGORIES } from '../../../constants/portfo
 import { SITE_INFO } from '../../../constants/siteInfo';
 import { whatsappService } from '../../../services/whatsappService';
 import { useModal } from '../../../hooks/useModal';
+import type { PortfolioFilter, PortfolioWork } from '../../../types/domain';
 import './Portfolio.scss';
 
 export const Portfolio = () => {
-  const [activeCategory, setActiveCategory] = useState('Todos');
-  const { isOpen, modalData, openModal, closeModal } = useModal();
+  const [activeCategory, setActiveCategory] = useState<PortfolioFilter>('Todos');
+  const { isOpen, modalData, openModal, closeModal } = useModal<PortfolioWork>();
 
   const filteredItems = activeCategory === 'Todos'
     ? PORTFOLIO_ITEMS
     : PORTFOLIO_ITEMS.filter((item) => item.category === activeCategory);
 
-  const handleConsultDesign = (item) => {
+  const handleConsultDesign = (item: PortfolioWork): void => {
     closeModal();
     whatsappService.openDirectChat({
       service: item.title,
@@ -137,7 +138,7 @@ export const Portfolio = () => {
         isOpen={isOpen}
         onClose={closeModal}
         title={modalData?.title}
-        subtitle={`${modalData?.category} • Acabado: ${modalData?.finish}`}
+        subtitle={modalData ? `${modalData.category} • Acabado: ${modalData.finish}` : undefined}
       >
         {modalData && (
           <div className="portfolio-modal-content">

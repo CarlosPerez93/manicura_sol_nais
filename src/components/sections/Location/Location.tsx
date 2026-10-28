@@ -1,6 +1,4 @@
-import React from 'react';
 import { MapPin, Clock, Navigation, Calendar, Phone, Sparkles } from 'lucide-react';
-import { InstagramIcon as Instagram } from '../../common/Icons/Icons';
 import { SectionHeading } from '../../common/SectionHeading/SectionHeading';
 import { Badge } from '../../common/Badge/Badge';
 import { Button } from '../../common/Button/Button';

@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
-import { Sparkles, Clock, Check, MessageCircle, Star, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { Sparkles, Clock, Check, MessageCircle, Star } from 'lucide-react';
 import { SectionHeading } from '../../common/SectionHeading/SectionHeading';
 import { Badge } from '../../common/Badge/Badge';
 import { Button } from '../../common/Button/Button';
 import { SERVICES, SERVICE_CATEGORIES } from '../../../constants/servicesData';
 import { whatsappService } from '../../../services/whatsappService';
+import type { Service, ServiceFilter } from '../../../types/domain';
 import './Services.scss';
 
-export const Services = ({ onSelectService }) => {
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+interface ServicesProps {
+  readonly onSelectService?: (serviceTitle: string) => void;
+}
+
+export const Services = ({ onSelectService }: ServicesProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<ServiceFilter>('Todos');
 
   const filteredServices = selectedCategory === 'Todos'
     ? SERVICES
     : SERVICES.filter((s) => s.category === selectedCategory);
 
-  const handleBookService = (service) => {
+  const handleBookService = (service: Service): void => {
     if (onSelectService) {
       onSelectService(service.title);
     } else {

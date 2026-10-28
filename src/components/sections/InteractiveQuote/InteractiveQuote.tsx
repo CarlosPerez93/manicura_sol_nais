@@ -1,5 +1,4 @@
-import React from 'react';
-import { Sparkles, Check, MessageCircle, Clock, Heart, Eye } from 'lucide-react';
+import { Sparkles, MessageCircle, Clock } from 'lucide-react';
 import { SectionHeading } from '../../common/SectionHeading/SectionHeading';
 import { Badge } from '../../common/Badge/Badge';
 import { Button } from '../../common/Button/Button';

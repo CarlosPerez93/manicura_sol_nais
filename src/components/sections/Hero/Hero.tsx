@@ -1,5 +1,4 @@
-import React from 'react';
-import { MessageCircle, Sparkles, MapPin, ShieldCheck, Heart, Calendar, ArrowRight } from 'lucide-react';
+import { MessageCircle, Sparkles, ShieldCheck, Heart, Calendar, ArrowRight } from 'lucide-react';
 import { InstagramIcon as Instagram } from '../../common/Icons/Icons';
 import { Button } from '../../common/Button/Button';
 import { Badge } from '../../common/Badge/Badge';

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Sparkles, Star, Quote, MessageCircle, Heart, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Star, Quote, MessageCircle, Heart } from 'lucide-react';
 import { SectionHeading } from '../../common/SectionHeading/SectionHeading';
 import { Badge } from '../../common/Badge/Badge';
 import { CLIENT_REVIEWS } from '../../../constants/reviewsData';

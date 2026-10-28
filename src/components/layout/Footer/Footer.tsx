@@ -1,8 +1,6 @@
-import React from 'react';
-import { Phone, MapPin, Heart, Sparkles, MessageCircle, ArrowUp } from 'lucide-react';
+import { Phone, MapPin, MessageCircle, ArrowUp } from 'lucide-react';
 import { InstagramIcon as Instagram } from '../../common/Icons/Icons';
 import { SITE_INFO } from '../../../constants/siteInfo';
-import { whatsappService } from '../../../services/whatsappService';
 import './Footer.scss';
 
 export const Footer = () => {

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Sparkles, Heart, CheckCircle2, Award, Smile, Shield } from 'lucide-react';
+import { Sparkles, Heart, Award, Shield } from 'lucide-react';
 import { SectionHeading } from '../../common/SectionHeading/SectionHeading';
 import { Badge } from '../../common/Badge/Badge';
 import { Button } from '../../common/Button/Button';

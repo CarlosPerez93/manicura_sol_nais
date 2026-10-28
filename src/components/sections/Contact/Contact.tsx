@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import {
   MessageCircle,
   Phone,
   Send,
-  Calendar,
   CheckCircle,
-  Sparkles,
   ChevronDown,
   HelpCircle,
   AlertCircle
@@ -22,27 +20,30 @@ import { useContactForm } from '../../../hooks/useContactForm';
 import { useToast } from '../../../context/ToastContext';
 import './Contact.scss';
 
-export const Contact = ({ preselectedService = '' }) => {
+interface ContactProps {
+  readonly preselectedService?: string;
+}
+
+export const Contact = ({ preselectedService = '' }: ContactProps) => {
   const {
     formData,
     errors,
     isSubmitting,
     isSuccess,
     handleChange,
-    setService,
     handleSubmit,
     sendToWhatsApp,
     resetForm
   } = useContactForm(preselectedService);
 
   const { addToast } = useToast();
-  const [activeFaq, setActiveFaq] = useState(null);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  const toggleFaq = (index) => {
+  const toggleFaq = (index: number): void => {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
-  const onFormSubmit = async (e) => {
+  const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const result = await handleSubmit(e);
     if (result && result.success) {
@@ -57,7 +58,7 @@ export const Contact = ({ preselectedService = '' }) => {
       } catch {
         // Fallback si canvas no disponible
       }
-    } else if (result && result.error) {
+    } else if (result && 'error' in result) {
       addToast(result.error, 'error');
     }
   };

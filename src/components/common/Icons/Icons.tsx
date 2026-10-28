@@ -1,6 +1,6 @@
-import React from 'react';
+import type { IconProps } from '../../../types/ui';
 
-export const InstagramIcon = ({ size = 20, className = '', ...props }) => (
+export const InstagramIcon = ({ size = 20, className = '', ...rest }: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -11,9 +11,9 @@ export const InstagramIcon = ({ size = 20, className = '', ...props }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={`icon-instagram ${className}`}
+    className={`icon-instagram ${className}`.trim()}
     aria-hidden="true"
-    {...props}
+    {...rest}
   >
     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -21,7 +21,7 @@ export const InstagramIcon = ({ size = 20, className = '', ...props }) => (
   </svg>
 );
 
-export const WhatsAppIcon = ({ size = 20, className = '', ...props }) => (
+export const WhatsAppIcon = ({ size = 20, className = '', ...rest }: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -32,9 +32,9 @@ export const WhatsAppIcon = ({ size = 20, className = '', ...props }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={`icon-whatsapp ${className}`}
+    className={`icon-whatsapp ${className}`.trim()}
     aria-hidden="true"
-    {...props}
+    {...rest}
   >
     <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
     <path d="M8 12h.01" />

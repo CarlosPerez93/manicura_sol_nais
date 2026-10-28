@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageCircle, Sparkles, X } from 'lucide-react';
 import { InstagramIcon as Instagram } from '../../common/Icons/Icons';
 import { SITE_INFO } from '../../../constants/siteInfo';

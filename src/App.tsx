@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ToastProvider } from './context/ToastContext';
 import { Navbar } from './components/layout/Navbar/Navbar';
 import { Footer } from './components/layout/Footer/Footer';
@@ -17,9 +17,9 @@ import './components/common/Toast/Toast.scss';
 export function App() {
   const sectionIds = ['inicio', 'sobre-soles', 'servicios', 'estilos', 'trabajos', 'opiniones', 'ubicacion', 'contacto'];
   const activeSection = useScrollSpy(sectionIds, 150);
-  const [selectedServiceForForm, setSelectedServiceForForm] = useState('');
+  const [selectedServiceForForm, setSelectedServiceForForm] = useState<string>('');
 
-  const handleSelectService = (serviceTitle) => {
+  const handleSelectService = (serviceTitle: string): void => {
     setSelectedServiceForForm(serviceTitle);
     const contactSection = document.getElementById('contacto');
     if (contactSection) {

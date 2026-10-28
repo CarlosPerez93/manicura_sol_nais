@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Sparkles, MessageCircle, Menu, X, Phone, MapPin } from 'lucide-react';
 import { InstagramIcon as Instagram } from '../../common/Icons/Icons';
 import { Button } from '../../common/Button/Button';
@@ -6,7 +6,11 @@ import { SITE_INFO } from '../../../constants/siteInfo';
 import { whatsappService } from '../../../services/whatsappService';
 import './Navbar.scss';
 
-export const Navbar = ({ activeSection }) => {
+interface NavbarProps {
+  readonly activeSection: string;
+}
+
+export const Navbar = ({ activeSection }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

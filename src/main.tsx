@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './assets/styles/main.scss';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root');
+if (!container) {
+  throw new Error('No se encontró el contenedor #root para montar la aplicación.');
+}
+
+ReactDOM.createRoot(container).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
