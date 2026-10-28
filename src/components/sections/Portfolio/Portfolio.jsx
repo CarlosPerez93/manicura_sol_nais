@@ -62,11 +62,20 @@ export const Portfolio = () => {
             >
               {/* Visual Canvas Display */}
               <div className="portfolio-card__canvas" style={{ background: item.gradient }}>
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="portfolio-real-image"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="canvas-nail-model">
+                    <div className="model-tip" />
+                    <div className="model-sparkle">✨</div>
+                  </div>
+                )}
                 <div className="canvas-gloss-refraction" aria-hidden="true" />
-                <div className="canvas-nail-model">
-                  <div className="model-tip" />
-                  <div className="model-sparkle">✨</div>
-                </div>
 
                 <div className="canvas-overlay">
                   <span className="view-btn">
@@ -136,9 +145,19 @@ export const Portfolio = () => {
               className="modal-canvas-display"
               style={{ background: modalData.gradient }}
             >
+              {modalData.image ? (
+                <img
+                  src={modalData.image}
+                  alt={modalData.title}
+                  className="modal-real-image"
+                />
+              ) : (
+                <div className="modal-nail-art">
+                  <span className="nail-emoji">💅</span>
+                </div>
+              )}
               <div className="canvas-gloss-refraction" />
-              <div className="modal-nail-art">
-                <span className="nail-emoji">💅</span>
+              <div className="modal-badge-overlay">
                 <span className="nail-badge-pill">{modalData.tag}</span>
               </div>
             </div>

@@ -107,18 +107,18 @@ export const Hero = () => {
             {/* Simulated Art Canvas */}
             <div className="nail-canvas-preview">
               <div className="canvas-gradient-bg">
-                <div className="nail-swatches-row">
-                  <div className="swatch-item swatch-item--1" title="Nude Rosé Shimmer">
-                    <span className="swatch-gloss" />
+                <div className="hero-real-nail-row">
+                  <div className="real-nail-thumb">
+                    <img src="/images/nails/work-1.jpg" alt="Trabajo real Soles Nails" />
+                    <span className="thumb-sheen" />
                   </div>
-                  <div className="swatch-item swatch-item--2" title="Terracotta Sunset">
-                    <span className="swatch-gloss" />
+                  <div className="real-nail-thumb">
+                    <img src="/images/nails/work-2.jpg" alt="Trabajo real Soles Nails" />
+                    <span className="thumb-sheen" />
                   </div>
-                  <div className="swatch-item swatch-item--3" title="Glazed Pearl Chrome">
-                    <span className="swatch-gloss" />
-                  </div>
-                  <div className="swatch-item swatch-item--4" title="Deep Burgundy Plum">
-                    <span className="swatch-gloss" />
+                  <div className="real-nail-thumb">
+                    <img src="/images/nails/work-3.jpg" alt="Trabajo real Soles Nails" />
+                    <span className="thumb-sheen" />
                   </div>
                 </div>
 
@@ -126,7 +126,7 @@ export const Hero = () => {
                   <p className="quote-text font-display">
                     "La elegancia está en la precisión de cada trazo."
                   </p>
-                  <span className="quote-author">— Soles Nails Studio</span>
+                  <span className="quote-author">— Soles Nails Studio • Higuera la Real</span>
                 </div>
               </div>
             </div>
