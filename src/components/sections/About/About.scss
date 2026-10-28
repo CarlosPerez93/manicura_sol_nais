@@ -47,6 +47,12 @@
       margin-bottom: 1.5rem;
     }
 
+    // En 320-480 px el aire interior por defecto deja una medida de línea muy
+    // corta y fuerza guiones; se reduce sin perder jerarquía.
+    @include mobile-sm {
+      padding: 1.35rem;
+    }
+
     &__title {
       font-size: clamp(1.25rem, 2vw + 0.5rem, 1.9rem);
       line-height: 1.3;
