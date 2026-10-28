@@ -1,0 +1,43 @@
+name: Deploy a Netlify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Un despliegue a la vez; si llega otro push, se cancela el anterior.
+concurrency:
+  group: netlify-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar tipos
+        run: npm run typecheck
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Publicar en producción
+        run: npx --yes netlify-cli@27 deploy --prod --dir=dist --site "$NETLIFY_SITE_ID"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
