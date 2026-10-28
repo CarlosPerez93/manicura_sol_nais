@@ -1,11 +1,12 @@
 # Soles Nails — Portafolio & Landing Page SPA ✨
 
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7_strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![SASS](https://img.shields.io/badge/SASS-Dart_Sass-CC6699?logo=sass&logoColor=white)](https://sass-lang.com/)
 [![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-SPA (Single Page Application) moderna, accesible y de alto rendimiento diseñada y desarrollada para **Soles Nails** (@soles.nailshigueralareal), estudio profesional de manicura, esmaltado semipermanente y nail art exclusivo ubicado en **Higuera la Real (Badajoz, España)**.
+SPA (Single Page Application) moderna, accesible y de alto rendimiento, escrita en **React + TypeScript (modo estricto)** y **SASS**, diseñada y desarrollada para **Soles Nails** (@soles.nailshigueralareal), estudio profesional de manicura, esmaltado semipermanente y nail art exclusivo ubicado en **Higuera la Real (Badajoz, España)**.
 
 ---
 
@@ -39,12 +40,24 @@ src/
 │   ├── common/                  # Componentes atómicos reutilizables (Button, Modal, Badge, SectionHeading, Toast)
 │   ├── layout/                  # Estructura visual global (Navbar, Footer, FloatingActions)
 │   └── sections/                # Módulos de sección independientes (Hero, About, Services, InteractiveQuote, Portfolio, ClientStories, Location, Contact)
-├── constants/                   # Datos desacoplados (siteInfo, servicesData, portfolioData, reviewsData, faqData)
-├── context/                     # Manejo de estado transversal (ToastContext)
+├── constants/                   # Datos desacoplados (siteInfo, servicesData, portfolioData, reviewsData)
+├── context/                     # Estado transversal (ToastContext)
 ├── hooks/                       # Custom hooks reutilizables (useScrollSpy, useContactForm, useModal, useInteractiveQuote)
-├── services/                    # Capa de servicios (whatsappService, contactService)
-└── utils/                       # Funciones puras de validación y formateo (validators, formatters)
+├── services/                    # Contratos + implementación (MessagingService, ContactRepository)
+├── types/                       # Contratos del dominio (domain.ts) y de la UI (ui.ts)
+├── utils/                       # Funciones puras de validación y formateo (validators, formatters)
+├── main.tsx                     # Punto de entrada
+└── vite-env.d.ts                # Tipos de Vite
 ```
+
+### Tipado
+
+- **`strict: true`** con `noUnusedLocals`, `noUnusedParameters` y `noImplicitOverride`: el proyecto compila sin `any` implícitos ni supresiones.
+- **`src/types/domain.ts`**: modelos del negocio (`Service`, `PortfolioWork`, `ClientReview`, `ContactFormData`, `QuoteSelection`…). La UI no define la forma de los datos.
+- **`src/types/ui.ts`**: contratos de componentes y hooks (`ButtonProps`, `ModalProps`, `UseModalResult<T>`, `UseContactFormResult`…).
+- **Uniones discriminadas** para los resultados del formulario (`ContactSubmitOutcome`), de modo que el consumidor debe comprobar `success` antes de leer `message` o `error`.
+- **Genéricos** en `useModal<T>`: cada modal declara el tipo de dato que transporta (`useModal<PortfolioWork>`).
+- `npm run typecheck` ejecuta `tsc --noEmit`; `npm run build` lo ejecuta antes de compilar con Vite.
 
 ### Aplicación de Principios SOLID
 
@@ -52,7 +65,16 @@ src/
 2. **Open/Closed Principle (OCP)**: Los componentes de UI (como `Button` y `Badge`) son configurables mediante variantes tipadas y extensibles sin modificar su código interno.
 3. **Liskov Substitution Principle (LSP)**: `Button` maneja de forma transparente tanto elementos `<button>` nativos como enlaces semánticos `<a>` con accesibilidad garantizada.
 4. **Interface Segregation Principle (ISP)**: Los componentes reciben props específicas y predecibles con valores por defecto bien definidos.
-5. **Dependency Inversion Principle (DIP)**: Los módulos de interfaz dependen de abstracciones de servicios y hooks en lugar de acoplar lógica dura en las vistas.
+5. **Dependency Inversion Principle (DIP)**: los consumidores dependen de interfaces, no de implementaciones. `useContactForm` recibe `ContactRepository` y `MessagingService` por inyección (con implementación por defecto), de modo que la UI puede testearse con dobles sin tocar los servicios reales.
+
+### Scripts
+
+| Comando | Descripción |
+| --- | --- |
+| `npm run dev` | Servidor de desarrollo en `http://localhost:3000` |
+| `npm run typecheck` | Comprobación de tipos (`tsc --noEmit`) |
+| `npm run build` | Typecheck + build de producción en `dist/` |
+| `npm run preview` | Previsualiza el build |
 
 ---
 
@@ -103,12 +125,35 @@ src/
 
 ## 🚀 Despliegue en Netlify
 
-El proyecto está preparado para su despliegue continuo en Netlify.
+Sitio en producción: **https://soles-nails-higuera.netlify.app**
 
-### Configuración de Build en Netlify
+### Despliegue continuo con GitHub Actions
+
+Cada push a `main` ejecuta [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
+
+1. `npm ci` — instalación reproducible.
+2. `npm run typecheck` — bloquea el despliegue si hay errores de tipos.
+3. `npm run build`.
+4. `netlify deploy --prod --dir=dist`.
+
+**Secretos requeridos** (Settings → Secrets and variables → Actions):
+
+| Secreto | Valor |
+| --- | --- |
+| `NETLIFY_AUTH_TOKEN` | Token personal de Netlify con acceso al equipo |
+| `NETLIFY_SITE_ID` | `e4c59c06-6aba-4cd8-a8e7-68c8549742be` |
+
+No se versiona ningún secreto: el workflow los inyecta en tiempo de ejecución.
+
+### Configuración de Build
+
 - **Build command**: `npm run build`
 - **Publish directory**: `dist`
-- **Node version**: `>= 18.0.0`
+- **Node**: 22 (fijado en el workflow)
+
+> El proyecto de Netlify también tiene el repositorio vinculado en *Build & deploy → Repository*.
+> Para usar el CI nativo en lugar de GitHub Actions, instala la GitHub App de Netlify sobre el
+> repositorio y desactiva el workflow: así se evitan despliegues duplicados.
 
 ---
 
